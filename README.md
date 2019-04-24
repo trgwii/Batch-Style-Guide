@@ -6,7 +6,25 @@ These practices have been developed by thorough examination of my own batch expe
 
 Without further ado, here are my thoughts on how to ensure maintainability, modularity, and security and safety (at least as much as possible) within batch programs.
 
-## TOC
+## Table of Contents
+
+1. [Batch Style Guide](#batch-style-guide)
+	1. [Table of Contents](#table-of-contents)
+	1. [Definitions](#definitions)
+		1. [Directives](#directives)
+	1. [Terminal output](#terminal-output)
+		1. [@-prefix](#@-prefix)
+		1. [echo off](#echo-off)
+	1. [Comments](#comments)
+	1. [Statements and control structures](#statements-and-control-structures)
+	1. [Modules and files](#modules-and-files)
+		1. [Line endings](#line-endings)
+		1. [call](#call)
+			1. [Returning values](#returning-values)
+		1. [Local variables](#local-variables)
+			1. [Caveats](#caveats)
+		1. [Local files](#local-files)
+	1. [Resources](#resources)
 
 ## Definitions
 
