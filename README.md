@@ -134,7 +134,7 @@ With that said, let's get to how to sleep in a batch program. Many different Sta
 @ping -n 10 127.0.0.1
 ```
 
-Or other similarly strange tools in order to get the desired behavior. None of these are needed, Windows includes a tool to wait, it's just not named `sleep` like in Unix-based systems.
+Or other similarly strange tools in order to get the desired behavior. None of these are needed, Windows includes a tool to wait called `timeout`, it's just not named `sleep` like people are used to in Unix-based systems.
 
 Here's how to use it:
 
