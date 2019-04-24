@@ -6,6 +6,8 @@ These practices have been developed by thorough examination of my own batch expe
 
 Without further ado, here are my thoughts on how to ensure maintainability, modularity, and security and safety (at least as much as possible) within batch programs.
 
+## TOC
+
 ## Definitions
 
 Some of the terms used in this document may sound foreign to you, so I'll try to explain them as best I can here.
@@ -103,6 +105,8 @@ This section describes various best-practices for writing statements and control
 
 [//]: # (TODO: Statements and control structures)
 
+[//]: # (TODO: Sleeping / timeouts)
+
 ## Modules and files
 
 Batch is global by default, so it will not help you ensure modularity and isolation between your batch scripts. Because of this limitation, ensuring this kind of isolation commonly found within other programming languages is up to you, the developer.
@@ -119,7 +123,47 @@ In addition, `notepad.exe` on all Windows versions since Windows 95 recognize an
 
 ### call
 
-[//]: # (TODO: Tell people to use call)
+I recommend you always prefer the `call` command over other methods for calling scripts from other scripts. Some of the other methods are:
+
+```batch
+@cmd /c "command"
+@start /wait "title" "command"
+@"command"
+```
+
+The main reason for using `call` over these is that it has none of the buggy behaviors of directly typing the name of a script to run it, and is more performant than `start` and `cmd`, as well as the fact that `call` can properly accept and utilize positional arguments.
+
+I'll illustrate with a simple numeric `add.bat`:
+
+```batch
+@setlocal
+
+@set a=%~1
+@set b=%~2
+
+@set /A result=%a%+%b%
+@echo %result%
+
+@endlocal
+```
+
+With `call`, using this file is as simple as:
+
+```batch
+C:\Users\Thomas\Documents\Batch>call add 1 2
+3
+```
+
+I also recommend always using `%~N`, where N is the argument index (1-indexed) in order to automatically strip quotes from arguments. Since I have used it in `add.bat` above, I can just as easily do:
+
+```batch
+C:\Users\Thomas\Documents\Batch>call add "1" "2"
+3
+```
+
+#### Returning values
+
+[//]: # (TODO: Return values)
 
 ### Local variables
 
