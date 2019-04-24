@@ -13,7 +13,7 @@ Without further ado, here are my thoughts on how to ensure maintainability, modu
 	1. [Definitions](#definitions)
 		1. [Directives](#directives)
 	1. [Terminal output](#terminal-output)
-		1. [@-prefix](#@-prefix)
+		1. [@-prefix](#-prefix)
 		1. [echo off](#echo-off)
 	1. [Comments](#comments)
 	1. [Statements and control structures](#statements-and-control-structures)
