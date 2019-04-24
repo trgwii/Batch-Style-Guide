@@ -387,6 +387,8 @@ So we fix the other script as well to also use `pushd` and `popd`:
 
 Now both of the scripts will work well. I recommend that ANY script that calls other scripts or uses local paths should also use `pushd` and `popd`. An obvious exception would be a script meant to behave as a command-line tool, where you want to run commands relative to the users' current working directory.
 
+Be aware that the same caveats for `setlocal` / `endlocal` relating to early exits mentioned above also apply to `pushd` and `popd`, so apply the same solution to fix these cases.
+
 ## Resources
 
 Batch does not have great documentation or support. This is a list of my favorite batch web-resources.
