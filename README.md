@@ -52,7 +52,6 @@ Examples of directives are:
 
 These commands don't really do anything except modify the behavior of other parts of your environment, they are not commands. They are directives for your environment.
 
-
 ## General code style
 
 This section covers general code style choices for batch, meant to improve readability and commonalities.
