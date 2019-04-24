@@ -17,6 +17,7 @@ Without further ado, here are my thoughts on how to ensure maintainability, modu
 		1. [echo off](#echo-off)
 	1. [Comments](#comments)
 	1. [Statements and control structures](#statements-and-control-structures)
+		1. [Sleeping](#sleeping)
 	1. [Modules and files](#modules-and-files)
 		1. [Line endings](#line-endings)
 		1. [call](#call)
@@ -110,11 +111,11 @@ Comments in batch are often created using a slightly confusing label syntax:
 
 [//]: # (TODO: Add link to future for-loop section)
 
-I recommend avoiding this, as it has a semantic meaning(creating a label named `:My comment`), and may conflict with existing labels. Labels also don't behave properly when nested inside for-loops. Instead, you should use the `rem` command. It behaves nicely with other commands and can be nested with `&` to produce an end-of-line comment:
+I recommend avoiding this, as it has a semantic meaning (creating a label named `:My comment`), and may conflict with existing labels. Labels also don't behave properly when nested inside for-loops. Instead, you should use the `rem` command. It behaves nicely with other commands and can be nested with `&&` to produce an end-of-line comment:
 
 ```batch
 @rem This is a comment
-@echo Hello World! & rem This is an inline comment
+@echo Hello World! && rem This is an inline comment
 ```
 
 ## Statements and control structures
@@ -123,7 +124,30 @@ This section describes various best-practices for writing statements and control
 
 [//]: # (TODO: Statements and control structures)
 
-[//]: # (TODO: Sleeping / timeouts)
+### Sleeping
+
+Sleeping / waiting the script is an unusual case, and should be avoided if possible. Don't introduce race conditions, there are better ways to handle asynchronicity.
+
+With that said, let's get to how to sleep in a batch program. Many different Stack Overflow posts will tell you to use something like:
+
+```batch
+@ping -n 10 127.0.0.1
+```
+
+Or other similarly strange tools in order to get the desired behavior. None of these are needed, Windows includes a tool to wait, it's just not named `sleep` like in Unix-based systems.
+
+Here's how to use it:
+
+```batch
+@rem Allow user to press a key to continue
+@timeout /t 10
+
+@rem Force the user to wait
+@timeout /t 10 /nobreak
+
+@rem Hide countdown command output
+@>NUL timeout /t 10 /nobreak
+```
 
 ## Modules and files
 
@@ -181,7 +205,32 @@ C:\Users\Thomas\Documents\Batch>call add "1" "2"
 
 #### Returning values
 
-[//]: # (TODO: Return values)
+Now we know how to call scripts with arguments, but if the script has a value to return to the caller, we use a user-specified variable name to assign to.
+
+Implementation example:
+
+```batch
+@setlocal
+
+@set a=%~1
+@set b=%~2
+@set output=%~3
+
+@set /A result=%a%+%b%
+
+@endlocal && set "%output%=%result%"
+```
+
+Thanks to batch's variable expansion, we can safely do this, and scripts can now easily return values to the caller:
+
+```batch
+@call add 1 2 result
+@echo %result%
+```
+
+You should generally prefer return values over echoing, as they are easier to deal with by the caller. These return value arguments also have the benefit of allowing multiple return values, which means you can have return value contexts (set one variable in one case, another in the other case).
+
+I recommend placing return variable names at the end of your argument list, or at the very beginning if you want to accept a variadic number of input arguments.
 
 ### Local variables
 
