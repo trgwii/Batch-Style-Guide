@@ -27,6 +27,7 @@ Without further ado, here are my thoughts on how to ensure maintainability, modu
 		1. [If statements](#if-statements)
 		1. [For-loops](#for-loops)
 		1. [Sleeping](#sleeping)
+		1. [Self-modifying code](#self-modifying-code)
 	1. [Modules and files](#modules-and-files)
 		1. [call](#call)
 			1. [Returning values](#returning-values)
@@ -203,6 +204,10 @@ Here's how to use it:
 @rem Hide countdown command output
 @>NUL timeout /t 10 /nobreak
 ```
+
+### Self-modifying code
+
+Please try to avoid creating batch programs that generate new batch programs, or modify other existing batch programs or themselves (programs that write to any other `.bat` / `.cmd` file), as this is detrimental to the overall readability and debugability of your project, and will cause difficulties for programmers coming from with other languages.
 
 ## Modules and files
 
