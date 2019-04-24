@@ -160,3 +160,6 @@ The solution to this is to add the missing `endlocal`, so each call to `setlocal
 
 ## Resources
 
+Batch does not have great documentation or support. This is a list of my favorite batch web-resources.
+
+* [SS64.com](https://ss64.com/nt/)
