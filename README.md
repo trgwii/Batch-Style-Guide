@@ -20,6 +20,8 @@ Without further ado, here are my thoughts on how to ensure maintainability, modu
 		1. [@-prefix](#-prefix)
 		1. [echo off](#echo-off)
 		1. [Redirecting output](#redirecting-output)
+			1. [Hiding output](#hiding-output)
+			1. [echo](#echo)
 	1. [Comments](#comments)
 	1. [Statements and control structures](#statements-and-control-structures)
 		1. [If statements](#if-statements)
@@ -45,7 +47,7 @@ Examples of directives are:
 
 * `setlocal` / `endlocal` - They change the way variable scoping works in the current environment
 * `echo on` / `echo off` - These toggle if lines of source code are outputted during program execution.
-* `color` - This command changes the color or background color of the terminal emulator it is running in, and not the traditional way by changing the output of other commands to output ANSI escape codes, but through some backdoor mechanism present in cmd.exe.
+* `color` - This command changes the color or background color of the terminal emulator it is running in, and not the traditional way by changing the output of other commands to output ANSI escape codes, but through some backdoor mechanism present in `cmd.exe`.
 
 These commands don't really do anything except modify the behavior of other parts of your environment, they are not commands. They are directives for your environment.
 
@@ -140,7 +142,15 @@ I recommend you try to avoid `echo off` for all your batch programs, and instead
 
 ### Redirecting output
 
+This section describes how to properly utilize the pipe operators (`|`, `>`, `<`) present in batch, and how to avoid common mistakes using them.
+
+#### Hiding output
+
 [//]: # (TODO: Write about placing > first in command)
+
+#### echo
+
+[//]: # (TODO: Write about how echo keeps the last space)
 
 ## Comments
 
