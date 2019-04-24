@@ -107,6 +107,14 @@ This section describes various best-practices for writing statements and control
 
 Batch is global by default, so it will not help you ensure modularity and isolation between your batch scripts. Because of this limitation, ensuring this kind of isolation commonly found within other programming languages is up to you, the developer.
 
+### Line endings
+
+Batch can sometimes cause problems if you use Unix-style line-endings, so I recommend to always use the Windows-style line-endings (CRLF / `\r\n`) for all batch files.
+
+Almost all common batch commands like `echo` will also output Windows-style line-endings, so using CRLF for everything reduces the possible problems that can be caused by different types of line-endings.
+
+In addition, `notepad.exe` on all Windows versions since Windows 95 recognize and handle CRLF correctly, while only very recently in Windows 10 has notepad gotten preliminary support for Unix-style line endings. Preventing the code from being read by notepad is effectively a bad type of source obfuscation, and also makes it easy for unknowing users to mess up your programs by opening and saving them in notepad, causing all Unix-style endings to be lost.
+
 ### Local variables
 
 Any batch script that defines or mutates variables should be surrounded by `setlocal` / `endlocal` directives. I say directives, because these don't really act as traditional commands, in the same way that `color` doesn't.
