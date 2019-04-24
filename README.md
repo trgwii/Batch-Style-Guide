@@ -12,14 +12,20 @@ Without further ado, here are my thoughts on how to ensure maintainability, modu
 	1. [Table of Contents](#table-of-contents)
 	1. [Definitions](#definitions)
 		1. [Directives](#directives)
+	1. [General code style](#general-code-style)
+		1. [Capitalization](#capitalization)
+		1. [Tabs vs spaces](#tabs-vs-spaces)
+		1. [Line endings](#line-endings)
 	1. [Terminal output](#terminal-output)
 		1. [@-prefix](#-prefix)
 		1. [echo off](#echo-off)
+		1. [Redirecting output](#redirecting-output)
 	1. [Comments](#comments)
 	1. [Statements and control structures](#statements-and-control-structures)
+		1. [If statements](#if-statements)
+		1. [For-loops](#for-loops)
 		1. [Sleeping](#sleeping)
 	1. [Modules and files](#modules-and-files)
-		1. [Line endings](#line-endings)
 		1. [call](#call)
 			1. [Returning values](#returning-values)
 		1. [Local variables](#local-variables)
@@ -42,6 +48,37 @@ Examples of directives are:
 * `color` - This command changes the color or background color of the terminal emulator it is running in, and not the traditional way by changing the output of other commands to output ANSI escape codes, but through some backdoor mechanism present in cmd.exe.
 
 These commands don't really do anything except modify the behavior of other parts of your environment, they are not commands. They are directives for your environment.
+
+
+## General code style
+
+This section covers general code style choices for batch, meant to improve readability and commonalities.
+
+### Capitalization
+
+Batch does not treat builtin commands different based on capitalization, therefore I recommend using lowercase for commands and options. I haven't seen a command that doesn't accept options in lowercase, and I don't expect that there are any builtin commands that have this limitation.
+
+Variable names should be snake_cased or lowerCamelCased, depending on preference, just make sure you have a consistent naming scheme, and don't mix capitalizations across variable names (even though batch ignores casing in variable names). Keeping the casing consistent ensures less developer confusion, and less mental overhead.
+
+### Tabs vs spaces
+
+Batch treats hard tabs well in all cases, and tabs produce lower file sizes, which of course doesn't matter in compiled languages, but in batch it increases performance slightly.
+
+```batch
+@if "%x%"=="2" (
+	echo x is 2
+)
+```
+
+You should also prefer "blocks" using parentheses over single-line if statements and for-loops.
+
+### Line endings
+
+Batch can sometimes cause problems if you use Unix-style line-endings, so I recommend to always use the Windows-style line-endings (CRLF / `\r\n`) for all batch files.
+
+Almost all common batch commands like `echo` will also output Windows-style line-endings, so using CRLF for everything reduces the possible problems that can be caused by different types of line-endings.
+
+In addition, `notepad.exe` on all Windows versions since Windows 95 recognize and handle CRLF correctly, while only very recently in Windows 10 has notepad gotten preliminary support for Unix-style line endings. Preventing the code from being read by notepad is effectively a bad type of source obfuscation, and also makes it easy for unknowing users to mess up your programs by opening and saving them in notepad, causing all Unix-style endings to be lost.
 
 ## Terminal output
 
@@ -101,6 +138,10 @@ The reason for this is that it only knows how to change the behavior globally, a
 
 I recommend you try to avoid `echo off` for all your batch programs, and instead prefer to use `@`.
 
+### Redirecting output
+
+[//]: # (TODO: Write about placing > first in command)
+
 ## Comments
 
 Comments in batch are often created using a slightly confusing label syntax:
@@ -108,8 +149,6 @@ Comments in batch are often created using a slightly confusing label syntax:
 ```batch
 ::My comment
 ```
-
-[//]: # (TODO: Add link to future for-loop section)
 
 I recommend avoiding this, as it has a semantic meaning (creating a label named `:My comment`), and may conflict with existing labels. Labels also don't behave properly when nested inside for-loops. Instead, you should use the `rem` command. It behaves nicely with other commands and can be nested with `&&` to produce an end-of-line comment:
 
@@ -122,7 +161,13 @@ I recommend avoiding this, as it has a semantic meaning (creating a label named 
 
 This section describes various best-practices for writing statements and control structures.
 
-[//]: # (TODO: Statements and control structures)
+### If statements
+
+[//]: # (TODO)
+
+### For-loops
+
+[//]: # (TODO)
 
 ### Sleeping
 
@@ -154,14 +199,6 @@ Here's how to use it:
 Batch is global by default, so it will not help you ensure modularity and isolation between your batch scripts. Because of this limitation, ensuring this kind of isolation commonly found within other programming languages is up to you, the developer.
 
 I recommend you treat your applications as modules themselves, apply the practices in this section to both your modules and your main application scripts. That way, your applications will hopefully be pluggable, so they can be used on their own or as a module within a larger application.
-
-### Line endings
-
-Batch can sometimes cause problems if you use Unix-style line-endings, so I recommend to always use the Windows-style line-endings (CRLF / `\r\n`) for all batch files.
-
-Almost all common batch commands like `echo` will also output Windows-style line-endings, so using CRLF for everything reduces the possible problems that can be caused by different types of line-endings.
-
-In addition, `notepad.exe` on all Windows versions since Windows 95 recognize and handle CRLF correctly, while only very recently in Windows 10 has notepad gotten preliminary support for Unix-style line endings. Preventing the code from being read by notepad is effectively a bad type of source obfuscation, and also makes it easy for unknowing users to mess up your programs by opening and saving them in notepad, causing all Unix-style endings to be lost.
 
 ### call
 
